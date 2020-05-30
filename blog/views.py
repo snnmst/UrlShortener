@@ -4,10 +4,13 @@ from .models import short_urls
 from .forms import UrlForm
 from .shortner import shortner
 from django.contrib import messages
+from django.db.models import F, Count
 
 
 def Sample(request, token):
     long_url = short_urls.objects.filter(short_url=token)[0]
+    count = short_urls.objects.filter(i)
+    
     return redirect(long_url.long_url)
 
 @login_required
@@ -19,7 +22,10 @@ def home(request):
             NewUrl = form.save(commit = False)
             a = shortner().issue_token()
             NewUrl.short_url = a
+            NewUrl.count += 1
+            NewUrl.clickedDate = True
             NewUrl.save()
+            
         else:
             form = UrlForm()
             messages.warning(request, f'This URL already exists or Invalid URL!')
