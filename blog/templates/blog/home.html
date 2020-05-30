@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+ <div class="content-section">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {{ form.as_p }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit" name="btn_save">Save</button>
+        </div>
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            {% if form.is_valid %}
+            <h1><a href="http://127.0.0.1:8000/{{a}}" target="_blank">Link = http://127.0.0.1:8000/{{a}}</a></h1> 
+            {% endif %}
+            
+        </small>
+    </div>
+</div>
+{% endblock content %}
