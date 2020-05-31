@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <h1> data page </h1>
+        {% for data in datas %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{data.short_url }}</a>
+                    <small class="text-muted"> {{ data.long_url}}</small>
+                    
+                </div>
+                <h2 class="article-title">{{data.author}}</h2>
+                <small class="text-muted">  {{data.clickedDate}}</small>
+            </div>
+        </article>
+        {% endfor %}
+{% endblock content %}

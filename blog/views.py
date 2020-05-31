@@ -5,12 +5,12 @@ from .forms import UrlForm
 from .shortner import shortner
 from django.contrib import messages
 from django.db.models import F, Count
+from django.contrib.auth.models import User
+
 
 
 def Sample(request, token):
     long_url = short_urls.objects.filter(short_url=token)[0]
-    
-    
     return redirect(long_url.long_url)
 
 @login_required
@@ -22,13 +22,21 @@ def home(request):
             NewUrl = form.save(commit = False)
             a = shortner().issue_token()
             NewUrl.short_url = a
-            NewUrl.clickedDate = True
+            NewUrl.author = User.objects.get(id = request.user.id)
+           
             NewUrl.save()
             
         else:
             form = UrlForm()
-            messages.warning(request, f'This URL already exists or Invalid URL!')
+            
     return render(request, 'blog/home.html', {'form': form, 'a': a})
+
+@login_required
+def data(request):
+    context = {
+        'datas': short_urls.objects.all()
+    }
+    return render(request, 'blog/data.html', context)
 
 
 # Create your views here.
